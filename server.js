@@ -4,6 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import connectDB from './src/config/db.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './src/swagger/swagger.js';
 
 // Route imports
 import authRoutes from './src/routes/auth.routes.js';
@@ -38,6 +40,7 @@ app.use('/api/provinces', provinceRoutes);
 app.use('/api/districts', districtRoutes);
 app.use('/api/stations', stationRoutes);
 
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Health check
 app.get('/', (req, res) => {
   res.json({ message: 'Tuk-Tuk Tracker API is running' });
