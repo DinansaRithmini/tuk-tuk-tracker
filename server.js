@@ -40,7 +40,17 @@ app.use('/api/provinces', provinceRoutes);
 app.use('/api/districts', districtRoutes);
 app.use('/api/stations', stationRoutes);
 
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  swaggerOptions: {
+    url: '/api/docs/swagger.json',
+  }
+}));
+
+app.get('/api/docs/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 // Health check
 app.get('/', (req, res) => {
   res.json({ message: 'Tuk-Tuk Tracker API is running' });
